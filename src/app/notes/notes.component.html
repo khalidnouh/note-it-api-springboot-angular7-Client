@@ -1,0 +1,85 @@
+<div class="container">
+  <!-- Note menu -->
+  <div class="row" style="margin-top:12px;">
+    <div class="col-md-8">
+      <input
+        type="text"
+        class="form-control"
+        style="width: 100%;"
+        placeholder="Search notes..."
+      />
+    </div>
+    <div class="col-md-4">
+      <button type="buton" (click)="createNoteBook()" style="margin-left:12px;">
+        <i class="fa fa-plus"></i> New notebook
+      </button>
+      <button
+        type="button"
+        (click)="createNote()"
+        [disabled]="selectedNoteBook == null"
+        class="btn btn-warning pull-right"
+        style="margin-left:12px;"
+      >
+        <i class="fa fa-plus"></i> New note
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Note content -->
+<div class="row" style="margin-top: 28px;">
+  <!-- Notebooks Menu -->
+  <div class="col-md-3">
+    <br />
+    <div class="list-group list-group-flush">
+      <a
+        class="list-group-item list-group-item-action"
+        (click)="selectAllNotes()"
+      >
+        <i class="fa fa-book"></i>&nbsp;All
+      </a>
+      <!-- Notebook List -->
+      <a
+        *ngFor="let notebook of allNotesBook"
+        (click)="setSelectedNoteBook(notebook)"
+        class="list-group-item list-group-item-action"
+      >
+        <i class="fa fa-book"></i>&nbsp;
+        <input
+          [(ngModel)]="notebook.name"
+          (change)="updateNotebook(notebook)"
+          type="text"
+          class="input-label"
+          style="border: none"
+          style="width: 80%"
+        />
+        <a (click)="deleteNotebook(notebook)" class="pull-right text-danger">
+          D
+          <i class="fa fa-trash-o"></i>
+        </a>
+      </a>
+    </div>
+  </div>
+
+  <!-- Notes Panel -->
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Message if there are no notes -->
+        <h3 *ngIf="selectedNoteBook != null">{{ selectedNoteBook.name }}</h3>
+        <h3 *ngIf="selectedNoteBook == null">All notes</h3>
+        <p>p</p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Note list -->
+      <app-note
+        *ngFor="let note_ of allNotes"
+        [note]="note_"
+        (noteUpdated)="updateNote(note_)"
+        (noteDeleted)="deleteNote(note_)"
+      >
+      </app-note>
+    </div>
+  </div>
+</div>
